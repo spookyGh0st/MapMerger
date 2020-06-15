@@ -33,7 +33,7 @@ clean:
 
 release:
 	@read -p "Enter version: " version; \
-	git tag "v$$version" && \
+	git tag "$$version" && \
 	git push && \
 	git push --tags && \
 	make clean && \
