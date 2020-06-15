@@ -34,13 +34,13 @@ type Event struct {
 	Time       float64         `json:"_time"`
 	Type       int             `json:"_type"`
 	Value      int             `json:"_value"`
-	CustomData EventCustomData `json:"_customData"`
+	CustomData EventCustomData `json:"_customData,omitempty"`
 }
 
 // EventCustomData Custom Data
 type EventCustomData struct {
-	Color    []float64 `json:"_color"`
-	Rotation []float64 `json:"_rotation"`
+	Color    []float64 `json:"_color,omitempty"`
+	Rotation []float64 `json:"_rotation,omitempty"`
 }
 
 // Note Beatmap Note
@@ -50,16 +50,16 @@ type Note struct {
 	LineLayer    int            `json:"_lineLayer"`
 	Type         int            `json:"_type"`
 	CutDirection int            `json:"_cutDirection"`
-	CustomData   NoteCustomData `json:"_customData"`
+	CustomData   NoteCustomData `json:"_customData,omitempty"`
 }
 
 // NoteCustomData Custom Data
 type NoteCustomData struct {
-	Position     []float64 `json:"_position"`
-	Rotation     []float64 `json:"_rotation"`
-	CutDirection float64   `json:"_cutDirection"`
-	Flip         []float64 `json:"_flip"`
-	Color        []float64 `json:"_color"`
+	Position     []float64 `json:"_position,omitempty"`
+	Rotation     []float64 `json:"_rotation,omitempty"`
+	CutDirection *float64  `json:"_cutDirection,omitempty"`
+	Flip         []float64 `json:"_flip,omitempty"`
+	Color        []float64 `json:"_color,omitempty"`
 }
 
 // Obstacle Beatmap Obstacle
@@ -69,16 +69,16 @@ type Obstacle struct {
 	Type       int                `json:"_type"`
 	Duration   float64            `json:"_duration"`
 	Width      int                `json:"_width"`
-	CustomData ObstacleCustomData `json:"_customData"`
+	CustomData ObstacleCustomData `json:"_customData,omitempty"`
 }
 
 // ObstacleCustomData Custom Data
 type ObstacleCustomData struct {
-	Position      []float64 `json:"_position"`
-	Scale         []float64 `json:"_scale"`
-	Rotation      []float64 `json:"_rotation"`
-	LocalRotation []float64 `json:"_flip"`
-	Color         []float64 `json:"_color"`
+	Position      []float64 `json:"_position,omitempty"`
+	Scale         []float64 `json:"_scale,omitempty"`
+	Rotation      []float64 `json:"_rotation,omitempty"`
+	LocalRotation []float64 `json:"_flip,omitempty"`
+	Color         []float64 `json:"_color,omitempty"`
 }
 
 // Bookmark MM Bookmark

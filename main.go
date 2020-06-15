@@ -20,29 +20,40 @@ func main() {
 	}
 
 	finalDiff := final.DiffJSON
+	println("making backup of", final.BeatmapFilename)
+	final.backup()
+
+	println("clearing old obstacle, events and notes")
+	finalDiff.Obstacles = []Obstacle{}
+	finalDiff.Events = []Event{}
+	finalDiff.Notes = []Note{}
+
 	println("Appending to", final.BeatmapFilename)
 	for _, diffSet := range info.DifficultyBeatmapSets {
 		for _, diff := range diffSet.DifficultyBeatmaps {
-			println("checking", diff.BeatmapFilename)
 			d := diff.DiffJSON
 			if diff.isLabel("notes") {
 				finalDiff.Notes = append(finalDiff.Notes, d.Notes...)
+				println("adding notes from", diff.BeatmapFilename)
 			}
 			if diff.isLabel("bombs") {
 				finalDiff.Notes = append(finalDiff.Notes, d.Notes...)
+				println("adding bombs from", diff.BeatmapFilename)
 			}
 			if diff.isLabel("lights") {
 				finalDiff.Events = append(finalDiff.Events, d.Events...)
+				println("adding lights from", diff.BeatmapFilename)
 			}
 			if diff.isLabel("walls") {
 				finalDiff.Obstacles = append(finalDiff.Obstacles, d.Obstacles...)
+				println("adding walls from", diff.BeatmapFilename)
 			}
 			if diff.isLabel("obstacles") {
 				finalDiff.Obstacles = append(finalDiff.Obstacles, d.Obstacles...)
+				println("adding walls from", diff.BeatmapFilename)
 			}
 		}
 	}
-	final.backup()
 	str, _ := json.Marshal(finalDiff)
 	ioutil.WriteFile(final.BeatmapFilename, str, 0666)
 }
@@ -75,15 +86,15 @@ func parseInfo() InfoJSON {
 		os.Exit(1)
 	}
 
-	for _, diffSet := range info.DifficultyBeatmapSets {
-		for _, diff := range diffSet.DifficultyBeatmaps {
+	for i, diffSet := range info.DifficultyBeatmapSets {
+		for j, diff := range diffSet.DifficultyBeatmaps {
 			diffStr, err := ioutil.ReadFile(diff.BeatmapFilename)
 			if err != nil {
 				println("Failed to read Difficulty:", diff.BeatmapFilename)
 				os.Exit(1)
 			}
-			diff.DiffJSON = &DifficultyJSON{}
-			err = json.Unmarshal(diffStr, diff.DiffJSON)
+			info.DifficultyBeatmapSets[i].DifficultyBeatmaps[j].DiffJSON = &DifficultyJSON{}
+			err = json.Unmarshal(diffStr, info.DifficultyBeatmapSets[i].DifficultyBeatmaps[j].DiffJSON)
 			if err != nil {
 				println("Failed to parse difficulty. Is it valid json?: ", diff.BeatmapFilename)
 				println(err.Error())
