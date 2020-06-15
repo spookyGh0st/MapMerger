@@ -2,7 +2,7 @@
 Merge difficulties of a Beatsaber Map
 
 ## 💾 Installation
-Download the binary from the [latest release](https://github.com/lolPants/songe-converter/releases).
+Download the binary from the [latest release](https://github.com/spookyGh0st/MapMerger/releases).
 That is all you need.
 
 ## 🔧 Usage
